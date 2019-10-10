@@ -1,0 +1,1364 @@
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" href="css/vocab.css" media="screen">   
+  <script src="js/jquery.js"></script> 
+  
+  <script>
+     goTop = function(){
+        $("html, body").animate({scrollTop: 10}, 1000);
+     };
+  </script>
+
+<body>
+  <div class="container">
+  <div class="head">
+  <div style="float:right">language <a href="index-en.html"><b>en</b></a> </div>
+
+  <h1><i>fel</i>: A Fine-grained Entity Linking vocabulary</h1>
+  <h2>Release 04-10-2019</h2>
+  <dt>Revision:</dt> <dd>0.0.1</dd>
+  <dl><dt>Authors:</dt>
+      <dd><a href="https://users.dcc.uchile.cl/~hrosales">Henry Rosales-M&eacute;ndez</a></dd>
+      <dd><a href="http://aidanhogan.com/">Aidan Hogan</a></dd>
+      <dd><a href="http://www.barbara.cl">Barbara Poblete</a></dd></dl>
+  <dl><dt>Download serialization:</dt>
+      <dd>
+        <span><a href="https://users.dcc.uchile.cl/~hrosales/fel.xml" target="_blank"><img src="img/format-xml.svg" alt="RDF/XML"></a> </span>
+        <span><a href="https://users.dcc.uchile.cl/~hrosales/fel.nt" target="_blank"><img src="img/format-nt.svg" alt="N-Triples"></a> </span>
+        <span><a href="https://users.dcc.uchile.cl/~hrosales/fel.ttl" target="_blank"><img src="img/format-ttl.svg" alt="TTL"></a> </span>
+      </dd>
+  </dl><dl><dt>License: </dt>
+      <dd><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank"><img src="img/CC-BY_icon.svg" alt="https://creativecommons.org/licenses/by/4.0/"></a>
+  </dd></dl><dl>
+
+  <br>
+  <hr>
+
+  <div class="status">
+    <div>
+      <span>Ontology Specification Draft</span>
+    </div>
+  </div>
+  
+  
+  <!------------------ Abstract ---------------------->
+  <div id="abstract">
+    <h2>Abstract</h2>
+    <p>Some decades have passed since the concept of "named entity" was used for the first time. Since then, new lines of research have emerged in this environment, such as linking the (named) entity mentions in a text collection with their corresponding knowledge-base entries. However, this introduces problems with respect to a consensus on the definition of the concept of "entity" in the literature.</p>
+    
+    <p>This vocabulary aims to model categories of EL in order to tackle this problem. Each category divides the universe of mentions into subclasses following the bases of current entity definitions. We design it in order to coexits with NIF format.</p>
+  </div>
+  
+  
+  <!------------------ Table of Contents ---------------------->
+  <div>
+  <h2>Table of contents</h2>
+    <ul>
+      <li>1. <a href="#introduction">Introduction </a></li>
+        <ul>
+          <li>1.1. <a href="#namespace">Namespace declarations</a></li>
+        </ul>
+      <li>2. <a href="#overv">Overview </a></li>
+      <li>3. <a href="#desc">Description </a></li>
+      <li>4. <a href="#crossreference">Cross reference</a></li>
+        <ul>
+          <li>4.1. <a href="#classes">Classes</a></li>
+          <li>4.2. <a href="#properties">Object Properties</a></li>
+          <li>4.3. <a href="#namedindividuals">Named Individuals</a></li>
+        </ul>
+      <li>5. <a href="#exp">Example </a></li>  
+      <li>6. <a href="#ref">ReferenceClasss </a></li>
+      <li>7. <a href="#cit">Citation </a></li>
+    </ul>
+  </div>
+  
+  <!------------------ Introduction ---------------------->
+  <div id="introduction">
+    <h2 class="list">Introduction <span class="backlink"> back to <a href="javascript:goTop()">top</a></span></h2>
+  
+    <p>Entity Linking (EL) is a task in Information Extraction that links the entity mentions in a text collection with their corresponding knowledge-base (KB) en- tries. With EL, we can take advantage of a large amount of information avail- able in publicly available KBs (e.g., Wikipedia, DBpedia, Wikidata) about real- world entities and their relationships to obtain semantic information that can be used to achieve a better understanding of text corpora. While the previous challenges for EL are well-known, another more fundamental issue is often overlooked by the community: the question of <i>what is an “entity”?</i> Though several definitions have emerged about what an entity should be [<a href="#Grishman">Grishman at al., 1996</a>][<a href="#Eckhardt">Eckhardt at al., 2014</a>][<a href="#Uren">Uren at al., 2006</a>][<a href="#Perera">Perera at al., 2016</a>], there is, as of yet, no clear consensus [<a href="#Borrega">Borrega at al., 2007</a>][<a href="#Ling">Ling at al., 2015</a>].</p>
+  
+  
+  <!------------------ Namespace ---------------------->
+  <div id="namespace">
+  <h3 class="list">Namespace declarations</h3>
+  <p>All examples in this document are written in the <a href="http://www.w3.org/TeamSubmission/turtle/"> Turtle RDF syntax</a>. Throughout the document, the following namespaces are used:</p>
+  
+
+
+      <table class="nspace">
+        <tbody>
+          <tr>
+            <th>Prefix</th>
+            <th>Namespace</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>owl</td>
+            <td><a href="http://www.w3.org/2002/07/owl">http://www.w3.org/2002/07/owl</a></td>
+            <td>The OWL 2 Schema vocabulary (OWL 2)</td>
+          </tr>
+          <tr>
+            <td>xsd</td>
+            <td><a href="http://www.w3.org/2001/XMLSchema#">http://www.w3.org/2001/XMLSchema#</a></td>
+            <td>XML Schema</td>
+          </tr>
+          <tr>
+            <td>rdfs</td>
+            <td><a href="http://www.w3.org/2000/01/rdf-schema#">http://www.w3.org/2000/01/rdf-schema#</a></td>
+            <td>The RDF Schema vocabulary (RDFS)</td>
+          </tr>
+          <tr>
+            <td>dc</td>
+            <td><a href="http://purl.org/dc/terms/">http://purl.org/dc/terms/</a></td>
+            <td>DCMI Metadata Terms</td>
+          </tr>
+          <tr>
+            <td>vann</td>
+            <td><a href="http://purl.org/vocab/vann/">http://purl.org/vocab/vann/</a></td>
+            <td>A vocabulary for annotating vocabulary descriptions</td>
+          </tr>
+          <tr>
+            <td>lexinfo</td>
+            <td><a href="http://www.lexinfo.net/ontology/2.0/lexinfo#">http://www.lexinfo.net/ontology/2.0/lexinfo#</a></td>
+            <td>Version 2.0 of LexInfo Ontology, based on Lemon</td>
+          </tr>
+          <tr>
+            <td>doap</td>
+            <td><a href="http://usefulinc.com/ns/doap#">http://usefulinc.com/ns/doap#</a></td>
+            <td>Description of a Project vocabulary</td>
+          </tr>
+          <tr>
+            <td>void</td>
+            <td><a href="http://rdfs.org/ns/void#">http://rdfs.org/ns/void#</a></td>
+            <td>Vocabulary of Interlinked Datasets</td>
+          </tr>
+          <tr>
+            <td>gold</td>
+            <td><a href="http://purl.org/linguistics/gold">http://purl.org/linguistics/gold</a></td>
+            <td>Genderal Ontology for Linguistic Description</td>
+          </tr>
+          <tr>
+            <td>skos</td>
+            <td><a href="http://www.w3.org/2004/02/skos/core#">http://www.w3.org/2004/02/skos/core#</a></td>
+            <td>SKOS Simple Knowledge Organization System Namespace Document</td>
+          </tr>
+        </tbody>
+      </table>
+
+  <!------------------ overview ---------------------->
+  <div id="overview">
+  <h2 id="overv" class="list"> Overview <span class="backlink"> back to <a href="javascript:goTop()">top</a></span></h2>
+  <p>This ontology has the following classes and properties.</p>
+  
+  <h4>Meta-classes</h4>
+  <ul class="hlist">
+   <li>
+      <a href="#fel:BaseFormClass" title="https://w3id.org/vcb/fel/BaseFormClass">fel:BaseFormClass</a>
+   </li>
+   <li>
+      <a href="#fel:ProperForm" title="https://w3id.org/vcb/fel/ProperForm">fel:ProperForm</a>
+   </li>
+   <li>
+      <a href="#fel:PartOfSpeechClass" title="https://w3id.org/vcb/fel/PartOfSpeechClass">fel:PartOfSpeechClass</a>
+   </li>
+   <li>
+      <a href="#fel:OverlapClass" title="https://w3id.org/vcb/fel/OverlapClass">fel:OverlapClass</a>
+   </li>
+   <li>
+      <a href="#fel:ReferenceClass" title="https://w3id.org/vcb/fel/ReferenceClass">fel:ReferenceClass</a>
+   </li>
+  </ul>
+  
+
+  <h4>Classes</h4>
+  <ul class="hlist">
+   <li>
+      <a href="#fel:FullProperForm" title="https://w3id.org/vcb/fel/FullProperForm">fel:FullProperForm</a>
+   </li>
+   <li>
+      <a href="#fel:ExtendedProperForm" title="https://w3id.org/vcb/fel/ExtendedProperForm">fel:ExtendedProperForm</a>
+   </li>
+   <li>
+      <a href="#fel:ShortProperForm" title="https://w3id.org/vcb/fel/ShortProperForm">fel:ShortProperForm</a>
+   </li>
+   <li>
+      <a href="#fel:NumericTemporalForm" title="https://w3id.org/vcb/fel/NumericTemporalForm">fel:NumericTemporalForm</a>
+   </li>
+   <li>
+      <a href="#fel:CommonForm" title="https://w3id.org/vcb/fel/CommonForm">fel:CommonForm</a>
+   </li>
+   <li>
+      <a href="#fel:ProForm" title="https://w3id.org/vcb/fel/ProForm">fel:ProForm</a>
+   </li>
+   
+   <li>
+      <a href="#fel:NounPhrasePoS" title="https://w3id.org/vcb/fel/NounPhrasePoS">fel:NounPhrasePoS</a>
+   </li>
+   <li>
+      <a href="#fel:SingularNounPhrasePoS" title="https://w3id.org/vcb/fel/SingularNounPhrasePoS">fel:SingularNounPhrasePoS</a>
+   </li>
+   <li>
+      <a href="#fel:PluralNounPhrasePoS" title="https://w3id.org/vcb/fel/PluralNounPhrasePoS">fel:PluralNounPhrasePoS</a>
+   </li>
+   <li>
+      <a href="#fel:VerbPoS" title="https://w3id.org/vcb/fel/VerbPoS">fel:VerbPoS</a>
+   </li>
+   <li>
+      <a href="#fel:AdjectivePoS" title="https://w3id.org/vcb/fel/AdjectivePoS">fel:AdjectivePoS</a>
+   </li>
+   <li>
+      <a href="#fel:AdverbPoS" title="https://w3id.org/vcb/fel/AdverbPoS">fel:AdverbPoS</a>
+   </li>   
+   <li>
+      <a href="#fel:MaximalOverlap" title="https://w3id.org/vcb/fel/MaximalOverlap">fel:MaximalOverlap</a>
+   </li>
+   <li>
+      <a href="#fel:NoOverlap" title="https://w3id.org/vcb/fel/NoOverlap">fel:NoOverlap</a>
+   </li>
+   <li>
+      <a href="#fel:IntermediateOverlap" title="https://w3id.org/vcb/fel/IntermediateOverlap">fel:IntermediateOverlap</a>
+   </li>
+   
+   <li>
+      <a href="#fel:MinimalOverlap" title="https://w3id.org/vcb/fel/MinimalOverlap">fel:MinimalOverlap</a>
+   </li>
+   
+   <li>
+      <a href="#fel:AnaphoricReference" title="https://w3id.org/vcb/fel/AnaphoricReference">fel:AnaphoricReference</a>
+   </li>
+   
+   <li>
+      <a href="#fel:DirectReference" title="https://w3id.org/vcb/fel/DirectReference">fel:DirectReference</a>
+   </li>
+   
+   <li>
+      <a href="#fel:DescriptiveReference" title="https://w3id.org/vcb/fel/DescriptiveReference">fel:DescriptiveReference</a>
+   </li>
+   
+   <li>
+      <a href="#fel:MetonymicReference" title="https://w3id.org/vcb/fel/MetonymicReference">fel:MetonymicReference</a>
+   </li>
+   
+   <li>
+      <a href="#fel:MetaphoricReference" title="https://w3id.org/vcb/fel/MetaphoricReference">fel:MetaphoricReference</a>
+   </li>
+   
+   <li>
+      <a href="#fel:RelatedReference" title="https://w3id.org/vcb/fel/RelatedReference">fel:RelatedReference</a>
+   </li>
+  </ul>
+   
+   
+   
+  <h4>Object Properties</h4>
+  <ul class="hlist">
+   <li>
+      <a href="#fel:entityType" title="https://w3id.org/vcb/fel/entityType">fel:entityType</a>
+   </li>
+  </ul>
+  </div>
+  
+  <!------------------ Description ---------------------->
+  
+  <div id="description">
+  <h2 id="desc" class="list">Description <span class="backlink"> back to <a href="javascript:goTop()">top</a></span></h2>
+  <p>This vocabulary is organized as a hierarchy, where the first level categories are: fel:BaseFormClass, fel:PartOfSpeechClass, fel:OverlapClass and fel:ReferenceClass. Each of them is a partition of the universe of mentions with the goal of seprate current entity definitions. Additionaly, we map other external resouces (in gray) related to which we are proposing, in order to avoid redundancy.  </p>
+
+  <div style="text-align:center">
+    <img width="1000" src="img/fel.png"></div>
+  </div>
+  
+  
+  <!------------------ Cross reference ---------------------->
+  <div id="crossref"><h2 id="crossreference" class="list">Cross reference<span class="backlink"> back to <a href="javascript:goTop()">top</a></span></h2>
+This section provides details for each class and property defined by Mnt.
+<div id="classes">
+   <h3 id="classes" class="list">Classes</h3>
+   <ul class="hlist">
+   <li>
+      <a href="#fel:BaseFormClass" title="https://w3id.org/vcb/fel/BaseFormClass">fel:BaseFormClass</a>
+   </li>
+   <li>
+      <a href="#fel:ProperForm" title="https://w3id.org/vcb/fel/ProperForm">fel:ProperForm</a>
+   </li>
+   <li>
+      <a href="#fel:FullProperForm" title="https://w3id.org/vcb/fel/FullProperForm">fel:FullProperForm</a>
+   </li>
+   <li>
+      <a href="#fel:ExtendedProperForm" title="https://w3id.org/vcb/fel/ExtendedProperForm">fel:ExtendedProperForm</a>
+   </li>
+   <li>
+      <a href="#fel:ShortProperForm" title="https://w3id.org/vcb/fel/ShortProperForm">fel:ShortProperForm</a>
+   </li>
+   <li>
+      <a href="#fel:AliasProperForm" title="https://w3id.org/vcb/fel/AliasProperForm">fel:AliasProperForm</a>
+   </li>
+   <li>
+      <a href="#fel:NumericTemporalForm" title="https://w3id.org/vcb/fel/NumericTemporalForm">fel:NumericTemporalForm</a>
+   </li>
+   <li>
+      <a href="#fel:CommonForm" title="https://w3id.org/vcb/fel/CommonForm">fel:CommonForm</a>
+   </li>
+   <li>
+      <a href="#fel:ProForm" title="https://w3id.org/vcb/fel/ProForm">fel:ProForm</a>
+   </li>
+   <li>
+      <a href="#fel:PartOfSpeechClass" title="https://w3id.org/vcb/fel/PartOfSpeechClass">fel:PartOfSpeechClass</a>
+   </li>
+   <li>
+      <a href="#fel:NounPhrasePoS" title="https://w3id.org/vcb/fel/NounPhrasePoS">fel:NounPhrasePoS</a>
+   </li>
+   <li>
+      <a href="#fel:SingularNounPhrasePoS" title="https://w3id.org/vcb/fel/SingularNounPhrasePoS">fel:SingularNounPhrasePoS</a>
+   </li>
+   <li>
+      <a href="#fel:PluralNounPhrasePoS" title="https://w3id.org/vcb/fel/PluralNounPhrasePoS">fel:PluralNounPhrasePoS</a>
+   </li>
+   <li>
+      <a href="#fel:VerbPoS" title="https://w3id.org/vcb/fel/VerbPoS">fel:VerbPoS</a>
+   </li>
+   <li>
+      <a href="#fel:AdjectivePoS" title="https://w3id.org/vcb/fel/AdjectivePoS">fel:AdjectivePoS</a>
+   </li>
+   <li>
+      <a href="#fel:AdverbPoS" title="https://w3id.org/vcb/fel/AdverbPoS">fel:AdverbPoS</a>
+   </li>
+   <li>
+      <a href="#fel:OverlapClass" title="https://w3id.org/vcb/fel/OverlapClass">fel:OverlapClass</a>
+   </li>
+   <li>
+      <a href="#fel:MaximalOverlap" title="https://w3id.org/vcb/fel/MaximalOverlap">fel:MaximalOverlap</a>
+   </li>
+   <li>
+      <a href="#fel:NoOverlap" title="https://w3id.org/vcb/fel/NoOverlap">fel:NoOverlap</a>
+   </li>
+   <li>
+      <a href="#fel:IntermediateOverlap" title="https://w3id.org/vcb/fel/IntermediateOverlap">fel:IntermediateOverlap</a>
+   </li>
+   <li>
+      <a href="#fel:MinimalOverlap" title="https://w3id.org/vcb/fel/MinimalOverlap">fel:MinimalOverlap</a>
+   </li>
+   <li>
+      <a href="#fel:ReferenceClass" title="https://w3id.org/vcb/fel/ReferenceClass">fel:ReferenceClass</a>
+   </li>
+   <li>
+      <a href="#fel:DirectReference" title="https://w3id.org/vcb/fel/DirectReference">fel:DirectReference</a>
+   </li>
+   <li>
+      <a href="#fel:MetaphoricReference" title="https://w3id.org/vcb/fel/MetaphoricReference">fel:MetaphoricReference</a>
+   </li>
+  </ul>
+   <!-- --> 
+   <div class="entity" id="fel:BaseFormClass">
+      <h3>fel:BaseFormClass<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/BaseFormClass</p>
+      <div class="comment">
+         <p>This class gathers definitions that mainly recognize Proper Nouns as entities (e.g., MUC-6 definition), with other more flexible definitions, such as those that allow pronouns, numbers, temporal expressions, and any mention with a related KB-entity. All mentions fill in this category, the separation is provided by its subclasses: <i>fel:ProperForm</i>, <i>fel:NumericTemporalForm</i>, <i>fel:CommonForm</i>, and <i>fel:ProForm</i>.</p>
+
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has sub-classes</dt>
+            <dd>
+                <a href="#fel:ProperForm" title="https://w3id.org/vcb/fel/ProperForm">fel:ProperForm</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+            <dd>
+                <a href="#fel:NumericTemporalForm" title="https://w3id.org/vcb/fel/NumericTemporalForm">fel:NumericTemporalForm</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+            <dd>
+                <a href="#fel:CommonForm" title="https://w3id.org/vcb/fel/CommonForm">fel:CommonForm</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+            <dd>
+                <a href="#fel:ProForm" title="https://w3id.org/vcb/fel/ProForm">fel:ProForm</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+      </dl>
+   </div>
+   
+   <!-- ok -->
+   <div class="entity" id="fel:ProperForm">
+      <h3>fel:ProperForm<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/ProperForm</p>
+      <div class="comment">
+         <p> This class gathers all mentions based on names (proper nouns), e.g., 'Michael Jackson', 'USA', 'King of the Pop', 'B. Obama', etc. Such mentions do not have to be nouns if they are based on proper nouns, as in the case of 'French, 'Orwellian', etc. Such mentions may use abbreviated or extended forms of names; we add a new level in the class hierarchy to separate them: Full, Extended, Short or Alias.</p>
+
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has super-classes</dt>
+            <dd>
+                <a href="#fel:BaseFormClass" title="https://w3id.org/vcb/fel/BaseFormClass">fel:BaseFormClass</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+         <dt>has sub-classes</dt>
+            <dd>
+                <a href="#fel:FullProperForm" title="https://w3id.org/vcb/fel/FullProperForm">fel:FullProperForm</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+            <dd>
+                <a href="#fel:ExtendedProperForm" title="https://w3id.org/vcb/fel/ExtendedProperForm">fel:ExtendedProperForm</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+            <dd>
+                <a href="#fel:ShortProperForm" title="https://w3id.org/vcb/fel/ShortProperForm">ShortProperForm</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+            <dd>
+                <a href="#fel:AliasProperForm" title="https://w3id.org/vcb/fel/AliasProperForm">fel:AliasProperForm</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+         <dt>skos:closeMatch</dt>
+            <dd>
+                <a href="http://www.lexinfo.net/ontology/2.0/lexinfo#ProperNoun" target="_blank" title="http://www.lexinfo.net/ontology/2.0/lexinfo#ProperNoun">lexinfo:ProperNoun</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+      </dl>
+   </div>
+   
+   <!-- ok -->
+   <div class="entity" id="fel:FullProperForm">
+      <h3>fel:FullProperForm<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/FullProperForm</p>
+      <div class="comment">
+         <p>This class gathers all proper-form mentions that (almost) exactly match with the label of the Knowledge-Base entity. For example, the mention 'Michael Jackson' targeting <a href="https://en.wikipedia.org/wiki/Michael_Jackson" target="_blank"> wiki:Michael_Jackson</a> is considered Full. This class also includes mentions that are syntactically close to the knowlegebase entity, sharing the same morpheme(s), for instance 'German' pointing to <a href="https://en.wikipedia.org/wiki/Germany" target="_blank">wiki:Germany</a> is also considered a FullProperForm.</p>
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has super-classes</dt>
+         <dd>
+            <a href="#fel:ProperForm" title="https://w3id.org/vcb/fel/ProperForm">fel:ProperForm</a>
+            <sup class="type-c" title="class">c</sup>
+         </dd>
+      </dl>
+   </div>
+   
+   <!-- ok -->
+   <div class="entity" id="fel:ShortProperForm">
+      <h3>fel:ShortProperForm<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/ShortProperForm</p>
+      <div class="comment">
+         <p>This class is concerned with all the proper-name mentions that are shorter than the label of the Knowledge-Base entity while still being based on the label. For instance, the mentions 'Jackson' or 'M. Jackson' targeting <a href="https://en.wikipedia.org/wiki/Michael_Jackson" target="_blank">wiki:Michael_Jackson</a> are considered ShortProperForm.</p>
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has super-classes</dt>
+         <dd>
+            <a href="#fel:ProperForm" title="https://w3id.org/vcb/fel/ProperForm">fel:ProperForm</a>
+            <sup class="type-c" title="class">c</sup>
+         </dd>
+      </dl>
+   </div>
+   
+   <!-- ok -->
+   <div class="entity" id="fel:ExtendedProperForm">
+      <h3>fel:ExtendedProperForm<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/ExtendedProperForm</p>
+      <div class="comment">
+         <p>This class gathers all proper-name mentions longer than the label of the Knowledge-Base entity but containing the label. For example, the mention 'Michael Joseph Jackson' targeting <a href="https://en.wikipedia.org/wiki/Michael_Jackson" target="_blank">wiki:Michael_Jackson</a> is considered an ExtendedProperForm.</p>
+
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>is equivalent to</dt>
+         <dd>
+            <a href="#StreamEndpoint" title="https://w3id.org/vcb/fel/StreamEndpoint">StreamEndpoint</a>
+            <sup class="type-c" title="class">c</sup>
+         </dd>
+         <dt>has super-classes</dt>
+         <dd>
+            <a href="#fel:ProperForm" title="https://w3id.org/vcb/fel/ProperForm">fel:ProperForm</a>
+            <sup class="type-c" title="class">c</sup>
+         </dd>
+      </dl>
+   </div>
+   
+   <!-- ok -->
+   <div class="entity" id="fel:AliasProperForm">
+      <h3>fel:AliasProperForm<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/AliasProperForm</p>
+      <div class="comment">
+         <p>This class is concerned with all the proper-noun mentions with a different morpheme than the primary label of the knowledge base entity to which if refers (though it may be a known alias). For instance, the mention 'King of Pop' targeting <a href="https://en.wikipedia.org/wiki/Michael_Jackson" target="_blank">wiki:Michael_Jackson</a> is considered an AliasProperForm.
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has super-classes</dt>
+         <dd>
+            <a href="#fel:ProperForm" title="https://w3id.org/vcb/fel/ProperForm">fel:ProperForm</a>
+            <sup class="type-c" title="class">c</sup>
+         </dd>
+      </dl>
+   </div>
+   
+   <!-- ok -->
+   <div class="entity" id="fel:NumericTemporalForm">
+      <h3>fel:NumericTemporalForm<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/NumericTemporalForm</p>
+      <div class="comment">
+         <p>This class gathers all mentions based on numeric and temporal expressions, such as: '1', 'one', '12/23/2019', etc. (as were included in MUC-6).</p>
+
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has super-classes</dt>
+            <dd>
+                <a href="#fel:BaseFormClass" title="https://w3id.org/vcb/fel/BaseFormClass">fel:BaseFormClass</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+          <dt>skos:narrower</dt>
+            <dd>
+                <a href="http://www.lexinfo.net/ontology/2.0/lexinfo#NumeralPOS" target="_blank" title="http://www.lexinfo.net/ontology/2.0/lexinfo#NumeralPOS">lexinfo:NumeralPOS</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+            <dd>
+                <a href="http://purl.org/linguistics/gold/Quantifier" target="_blank" title="http://purl.org/linguistics/gold/Quantifier">gold:Quantifier</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>  
+            
+      </dl>
+   </div>
+   
+   <!-- -->
+   <div class="entity" id="fel:CommonForm">
+      <h3>fel:CommonForm<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/CommonForm</p>
+      <div class="comment">
+         <p>This class gathers all the mentions with a corresponding entity in the knowledgebase, but that does not correspond to a Proper Form, Pro-Form or Numeric/Temporal Form. For instance, the mention 'belt' referring to <a href="https://en.wikipedia.org/wiki/Belt_(clothing)" target="_blank">wiki:Belt_(clothing)</a> is considered CommonForm.</p>
+
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has super-classes</dt>
+            <dd>
+                <a href="#fel:BaseFormClass" title="https://w3id.org/vcb/fel/BaseFormClass">fel:BaseFormClass</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+      </dl>
+   </div>
+   
+   <!-- -->
+   <div class="entity" id="fel:ProForm">
+      <h3>fel:ProForm<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/ProForm</p>
+      <div class="comment">
+         <p>This class gathers all mentions based on pronouns, pro-adjective, etc. For example, the mentions 'he', 'theirs', etc., are considered ProForm (assuming they link to a knowledgebase entity).</p>
+
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has super-classes</dt>
+            <dd>
+                <a href="#fel:BaseFormClass" title="https://w3id.org/vcb/fel/BaseFormClass">fel:BaseFormClass</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+      </dl>
+   </div>
+   
+   <!-- -->
+   <div class="entity" id="fel:PartOfSpeechClass">
+      <h3>fel:PartOfSpeechClass<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/PartOfSpeechClass</p>
+      <div class="comment">
+         <p>This meta-class gathers classes that divide annotations according to the part-of-speech of their mention.</p>
+
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+        <dt>has sub-classes</dt>
+            <dd>
+                <a href="#fel:NounPhrasePoS" title="https://w3id.org/vcb/fel/NounPhrasePoS">fel:NounPhrasePoS</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+            <dd>
+                <a href="#fel:VerbPoS" title="https://w3id.org/vcb/fel/VerbPoS">fel:VerbPoS</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+            <dd>
+                <a href="#fel:AdjectivePoS" title="https://w3id.org/vcb/fel/AdjectivePoS">fel:AdjectivePoS</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+            <dd>
+                <a href="#fel:AdverbPoS" title="https://w3id.org/vcb/fel/AdverbPoS">fel:AdverbPoS</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+      </dl>
+   </div>
+   
+   <!-- -->
+   <div class="entity" id="fel:NounPhrasePoS">
+      <h3>fel:NounPhrasePoS<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/NounPhrasePoS</p>
+      <div class="comment">
+         <p>This class gathers all the noun mentions.</p>
+
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has super-classes</dt>
+            <dd>
+                <a href="#fel:PartOfSpeechClass" title="https://w3id.org/vcb/fel/PartOfSpeechClass">fel:PartOfSpeechClass</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+         <dt>has sub-classes</dt>
+            <dd>
+                <a href="#fel:SingularNounPhrasePoS" title="https://w3id.org/vcb/fel/SingularNounPhrasePoS">fel:SingularNounPhrasePoS</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+            <dd>
+                <a href="#fel:PluralNounPhrasePoS" title="https://w3id.org/vcb/fel/PluralNounPhrasePoS">fel:PluralNounPhrasePoS</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+         <dt>skos:narrower</dt>
+            <dd>
+                <a href="http://www.lexinfo.net/ontology/2.0/NounPOS" target="_blank" title="http://www.lexinfo.net/ontology/2.0/lexinfo#NounPOS">lexinfo:NounPOS</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+            <dd>
+                <a href="http://purl.org/linguistics/gold/Noun" target="_blank" title="http://purl.org/linguistics/gold/Noun">gold:Noun</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>   
+      </dl>
+   </div>
+   
+   <!-- -->
+   <div class="entity" id="fel:SingularNounPhrasePoS">
+      <h3>fel:SingularNounPhrasePoS<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/SingularNounPhrasePoS</p>
+      <div class="comment">
+         <p>This class gathers all the singular noun mentions, including 'documentary', 'Germany', etc.</p>
+
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has super-classes</dt>
+            <dd>
+                <a href="#fel:NounPhrasePoS" title="https://w3id.org/vcb/fel/NounPhrasePoS">fel:NounPhrasePoS</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+      </dl>
+   </div>
+   
+   <!-- -->
+   <div class="entity" id="fel:PluralNounPhrasePoS">
+      <h3>fel:PluralNounPhrasePoS<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/PluralNounPhrasePoS</p>
+      <div class="comment">
+         <p>This class gathers all the plural noun mentions. For instance, 'political parties' may refer to <a href="https://en.wikipedia.org/wiki/Political_party" target="_blank">wiki:Political_party</a>.</p>
+
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has super-classes</dt>
+            <dd>
+                <a href="#fel:NounPhrasePoS" title="https://w3id.org/vcb/fel/NounPhrasePoS">fel:NounPhrasePoS</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+      </dl>
+   </div>
+   
+   <!-- -->
+   <div class="entity" id="fel:VerbPoS">
+      <h3>fel:VerbPoS<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/VerbPoS</p>
+      <div class="comment">
+         <p>This class gathers all the verb mentions. For instance the verb mention 'assassinated' may link to <a href="https://en.wikipedia.org/wiki/Assassination">wiki:Assassination</a>.</p>
+
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has super-classes</dt>
+            <dd>
+                <a href="#fel:PartOfSpeechClass" title="https://w3id.org/vcb/fel/PartOfSpeechClass">fel:PartOfSpeechClass</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+          <dt>skos:closeMatch</dt>
+            <dd>
+                <a href="http://www.lexinfo.net/ontology/2.0/lexinfo#VerbPOS" target="_blank" title="http://www.lexinfo.net/ontology/2.0/lexinfo#VerbPOS">lexinfo:VerbPOS</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>  
+      </dl>
+   </div>
+   
+   <!-- -->
+   <div class="entity" id="fel:AdjectivePoS">
+      <h3>fel:AdjectivePoS<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/AdjectivePoS</p>
+      <div class="comment">
+         <p>This class gather all the adjective mentions. For example, there is a wikipedia page (<a href="https://en.wikipedia.org/wiki/Red" target="_blank">wiki:Red</a>) about the color 'red'.</p>
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has super-classes</dt>
+            <dd>
+                <a href="#fel:PartOfSpeechClass" title="https://w3id.org/vcb/fel/PartOfSpeechClass">fel:PartOfSpeechClass</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+          <dt>skos:closeMatch</dt>
+            <dd>
+                <a href="http://www.lexinfo.net/ontology/2.0/lexinfo#AdjectivePOS" target="_blank" title="http://www.lexinfo.net/ontology/2.0/lexinfo#AdjectivePOS">lexinfo:AdjectivePOS</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>  
+      </dl>
+   </div>
+   
+   <!-- -->
+   <div class="entity" id="fel:AdverbPoS">
+      <h3>fel:AdverbPoS<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/AdverbPoS</p>
+      <div class="comment">
+         <p>This class gathers all the Adverb mentions. For instance, 'comercially' could be associated to <a href="https://en.wikipedia.org/wiki/Commerce">wiki:Commerce</a></p>
+
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has super-classes</dt>
+            <dd>
+                <a href="#fel:PartOfSpeechClass" title="https://w3id.org/vcb/fel/PartOfSpeechClass">fel:PartOfSpeechClass</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+         <dt>skos:closeMatch</dt>
+            <dd>
+                <a href="http://www.lexinfo.net/ontology/2.0/lexinfo#AdverbPOS" target="_blank" title="http://www.lexinfo.net/ontology/2.0/lexinfo#AdverbPOS">lexinfo:AdverbPOS</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>  
+      </dl>
+   </div>
+   
+   <!-- -->
+   <div class="entity" id="fel:OverlapClass">
+      <h3>fel:OverlapClass<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/OverlapClass</p>
+      <div class="comment">
+         <p>This meta-class gathers classes that divide annotations based on whether or not their mention overlaps with others. For example, in the sentence 'Living with Michael Jackson is a television documentary' the mention 'documentary' does not overlap with another mention; for this reason it is considered non-overlapping. On the other hand, the mentions 'Living with Michael Jackson' and 'Michael Jackson' have overlap.</p>
+
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has sub-classes</dt>
+            <dd>
+                <a href="#fel:NoOverlap" title="https://w3id.org/vcb/fel/NoOverlap">fel:NoOverlap</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+            <dd>
+                <a href="#fel:MaximalOverlap" title="https://w3id.org/vcb/fel/MaximalOverlap">fel:MaximalOverlap</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+            <dd>
+                <a href="#fel:IntermediateOverlap" title="https://w3id.org/vcb/fel/IntermediateOverlap">fel:IntermediateOverlap</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+            <dd>
+                <a href="#fel:MinimalOverlap" title="https://w3id.org/vcb/fel/MinimalOverlap">fel:MinimalOverlap</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+      </dl>
+   </div>
+   
+   
+   <!-- -->
+   <div class="entity" id="fel:NoOverlap">
+      <h3>fel:NoOverlap<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/NoOverlap</p>
+      <div class="comment">
+         <p>This class gathers all the mentions without overlap.</p>
+
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has super-classes</dt>
+            <dd>
+                <a href="#fel:OverlapClass" title="https://w3id.org/vcb/fel/OverlapClass">fel:OverlapClass</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+      </dl>
+   </div>
+   
+   <!-- -->
+   <div class="entity" id="fel:MaximalOverlap">
+      <h3>fel:MaximalOverlap<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/MaximalOverlap</p>
+      <div class="comment">
+         <p>This class describes all the mentions that overlap with others and that, more specifically, contain other mentions entirely inside them but are not contained in other mentions. For instance, 'Living with Michael Jackson' is considered as maximal overlap assuming 'Michael Jackson' is also annotated and it is not contained inside another mention.</p>
+
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has super-classes</dt>
+            <dd>
+                <a href="#fel:OverlapClass" title="https://w3id.org/vcb/fel/OverlapClass">fel:OverlapClass</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+      </dl>
+   </div>
+   
+   <!-- -->
+   <div class="entity" id="fel:IntermediateOverlap">
+      <h3>fel:IntermediateOverlap<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/IntermediateOverlap</p>
+      <div class="comment">
+         <p>This class describes all the mentions that overlap with others and that, more specifically, both contain and are contained in other mentions. For instance, in the mention 'New York Police Department Museum', the mention 'New York Police Department' has intermediate overlap because it is contained in the overall mention and contains the mention 'New York'.</p>
+
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has super-classes</dt>
+            <dd>
+                <a href="#fel:OverlapClass" title="https://w3id.org/vcb/fel/OverlapClass">fel:OverlapClass</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+      </dl>
+   </div>
+   
+   <!-- -->
+   <div class="entity" id="fel:MinimalOverlap">
+      <h3>fel:MinimalOverlap<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/MinimalOverlap</p>
+      <div class="comment">
+         <p>This class describes all the mentions that overlap with others and that, more specifically, are contained in but do not contain other mentions. For instance, in the annotation 'Living with Michael Jackson', the mention 'Michael Jackson' is considered to have minimal overlap.</p>
+
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has super-classes</dt>
+            <dd>
+                <a href="#fel:OverlapClass" title="https://w3id.org/vcb/fel/OverlapClass">fel:OverlapClass</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+      </dl>
+   </div>
+   
+   <!-- -->
+   <div class="entity" id="fel:ReferenceClass">
+      <h3>fel:ReferenceClass<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/ReferenceClass</p>
+      <div class="comment">
+         <p>This meta-class gathers classes that divide annotations based on how the mention references its entity. Examples of types of reference include Anaphoric, Direct, Descriptive, Metaphoric, Metonymic and Related.</p>
+
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has sub-classes</dt>
+            <dd>
+                <a href="#fel:DirectReference" title="https://w3id.org/vcb/fel/DirectReference">fel:DirectReference</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+            <dd>
+                <a href="#fel:MetaphoricReference" title="https://w3id.org/vcb/fel/MetaphoricReference">fel:MetaphoricReference</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+      </dl>
+   </div>
+   
+   <!-- -->
+   <div class="entity" id="fel:AnaphoricReference">
+      <h3>fel:AnaphoricReference<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/AnaphoricReference</p>
+      <div class="comment">
+         <p>This class gathers mentions that are pro-forms referring to an antecedent or postcedent in the text. For instance, in the sentence 'His son was widely regarded ...' the mention 'His' may be an anaphoric reference to wiki:Joe_Jackson_(manager). (Note that noun phrases such as 'His son' referring to wiki:Michael_Jackson' should rather be marked as descriptive references.). </p>
+
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has super-classes</dt>
+            <dd>
+                <a href="#fel:ReferenceClass" title="https://w3id.org/vcb/fel/ReferenceClass">fel:ReferenceClass</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+      </dl>
+   </div>
+   
+   <!-- -->
+   <div class="entity" id="fel:DirectReference">
+      <h3>fel:DirectReference<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/DirectReference</p>
+      <div class="comment">
+         <p>This class gathers mentions with references based on the direct, literal meaning of the words and names. For instance, the reference 'Michael Jackson' referring to wiki:Michael_Jackson, or the reference 'talent manager' referring to wiki:Talent_manager, are considered direct references.</p>
+
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has super-classes</dt>
+            <dd>
+                <a href="#fel:ReferenceClass" title="https://w3id.org/vcb/fel/ReferenceClass">fel:ReferenceClass</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+      </dl>
+   </div>
+   
+   <!-- -->
+   <div class="entity" id="fel:DescriptiveReference">
+      <h3>fel:DescriptiveReference<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/DescriptiveReference</p>
+      <div class="comment">
+         <p>This class gathers mentions based on describing the entities they refer to. For instance, the mention 'the capital of Peru' refers descriptively to wiki:Lima, or in the sentence 'Michael Jackson and his father', the mention 'his father' refers to wiki:Joe_Jackson_(manager). Note that proforms should rather be marked as anaphoric reference.</p>
+
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has super-classes</dt>
+            <dd>
+                <a href="#fel:ReferenceClass" title="https://w3id.org/vcb/fel/ReferenceClass">fel:ReferenceClass</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+      </dl>
+   </div>
+   
+   <!-- -->
+   <div class="entity" id="fel:MetaphoricReference">
+      <h3>fel:MetaphoricReference<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/MetaphoricReference</p>
+      <div class="comment">
+         <p>This class gathers mentions that make reference based on a figurative rather than literal meaning of the words. For example, in the phrase 'the King of Pop', the mention 'King' can be considered a metaphoric reference to wiki:King; in the sentence 'they added spice to their relationship', the mention 'spice' (wiki:Spice) is again a metaphoric reference.</p>
+
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has super-classes</dt>
+            <dd>
+                <a href="#fel:ReferenceClass" title="https://w3id.org/vcb/fel/ReferenceClass">fel:ReferenceClass</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+      </dl>
+   </div>
+   
+   <!-- -->
+   <div class="entity" id="fel:MetonymicReference">
+      <h3>fel:MetonymicReference<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/MetonymicReference</p>
+      <div class="comment">
+         <p>This class gathers mentions that refer to something specific by reference to a broader related entity (often, but not always, countries). For example, in the phrase 'Russia announced today', the mention 'Russia' is a metonymic reference to wiki:Government_of_Russia; in the phrase 'Poland won 3-2 on penalties', 'Poland' may be a metonymic reference to wiki:Poland_national_football_team, etc.</p>
+
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has super-classes</dt>
+            <dd>
+                <a href="#fel:ReferenceClass" title="https://w3id.org/vcb/fel/ReferenceClass">fel:ReferenceClass</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+      </dl>
+   </div>
+   
+   
+   <!-- -->
+   <div class="entity" id="fel:RelatedReference">
+      <h3>fel:RelatedReference<sup class="type-c" title="class">c</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#classes">classes</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/RelatedReference</p>
+      <div class="comment">
+         <p>This class gathers mentions that refer to something for which there is (only) something closely related in the knowledge-base. For instance, in the phrase 'The Russian daily RBK', the mention 'daily' refers to a daily newpaper, but in Wikipedia we only have wiki:Newspaper, so 'daily' can be seen as a reference to the closely related wiki:Newspaper. (Such references are sometimes reflected, for example, with redirects in Wikipedia, or pointers to a subsection of an entity's article.)</p>
+
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+      <dl class="description">
+         <dt>has super-classes</dt>
+            <dd>
+                <a href="#fel:ReferenceClass" title="https://w3id.org/vcb/fel/ReferenceClass">fel:ReferenceClass</a>
+                <sup class="type-c" title="class">c</sup>
+            </dd>
+      </dl>
+   </div>
+   
+   
+   <!-- Object Properties -->
+   </div><div id="objectproperties">
+   <h3 id="properties" class="list">Object Properties</h3>
+   <ul class="hlist">
+      <li>
+         <a href="#fel:entityType" title="https://w3id.org/vcb/fel/entityType">fel:entityType</a>
+      </li>
+   </ul>
+   
+   <!-- -->
+   <div class="entity" id="fel:entityType">
+      <h3>fel:entityType<sup class="type-op" title="object property">op</sup>
+         <span class="backlink"> back to <a href="javascript:goTop()">top</a> or <a href="#objectproperties">properties</a></span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/entityType</p>
+      <div class="comment">
+         <p>To specify the entity type of a KB-entity. The domain is URIs/IRIs of EK entities, and the range types of entities, e.g., Organization, Place, Person, etc.</p>
+
+      </div>
+      <dl class="definedBy">
+         <dt>Is defined by</dt>
+         <dd>
+            <a href="https://w3id.org/vcb/fel/">https://w3id.org/vcb/fel/</a>
+         </dd>
+      </dl>
+   </div>
+   
+   
+   <!------- Name Individuals--------->
+   <!--
+   </div><div id="namedindividuals">
+   <h3 id="namedindividuals" class="list">Named Individuals</h3>
+   <ul class="hlist">
+      <li>
+         <a href="#" title="https://w3id.org/vcb/fel/">
+            <span></span>
+         </a>
+      </li>
+   </ul>
+   <div class="entity" id="">
+      <h3>:<sup class="type-ni" title="named individual">ni</sup>
+         <span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#namedindividuals">Named Individual ToC</a>
+         </span>
+      </h3>
+      <p>
+         <strong>IRI:</strong> https://w3id.org/vcb/fel/</p>
+      <dl class="description">
+         <dt>belongs to</dt>
+         <dd>
+            <span class="dotted" title="http://purl.org/vocommons/voaf#Vocabulary">vocabulary</span>
+            <sup class="type-c" title="class">c</sup>
+         </dd>
+      </dl>
+   </div>
+   -->
+   </div><div id="legend">
+   <h2>Legend <span class="backlink"> back to <a href="javascript:goTop()">top</a></span></h2>
+     <div class="entity">
+     <sup class="type-c" title="Classes">c</sup>: Classes <br>
+     <sup class="type-op" title="Object Properties">op</sup>: Object Properties <br>
+     <sup class="type-dp" title="Data Properties">dp</sup>: Data Properties <br>
+     <sup class="type-ni" title="Named Individuals">ni</sup>: Named Individuals
+   </div>
+   </div></div>
+   
+   
+   <!--------  Example ------------->
+    <div id="Example">
+        <h2 id="exp" class="list">Example <span class="backlink"> back to <a href="javascript:goTop()">top</a></span></h2>
+        <p>An example cannot be missing! Above we show in NIF format the sentence "<i>The program was broadcast Living with Michael Jackson.</i>" and the annotation of three mentions. We incorporate the categorization of each anntation, as well as the entity type of their links.</p>
+
+        <div class="prettyprint">
+            @prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .<br>
+            @prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .<br>
+            @prefix owl: &lt;http://www.w3.org/2002/07/owl#&gt; .<br>
+            @prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; .<br>
+            @prefix nif: &lt;http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#&gt; .<br>
+            @prefix itsrdf: &lt;http://www.w3.org/2005/11/its/rdf#&gt; .<br>
+            @prefix fel: &lt;https://w3id.org/vcb/fel/&gt; .<br><br>
+            &lt;https://example.org/doc1#char=0,54&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;a nif:String , nif:Context  , nif:RFC5147String ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;nif:isString """The program was broadcast Living with Michael Jackson."""^^xsd:string ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;nif:beginIndex "0"^^xsd:nonNegativeInteger ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;nif:endIndex "54"^^xsd:nonNegativeInteger ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;nif:sourceUrl &lt;https://example.org/doc1&gt; .<br>
+            <br>
+            &lt;https://example.org/doc1#char=0,54&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;a nif:String , nif:Context , nif:RFC5147String ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;nif:isString """The program was broadcast Living with Michael Jackson."""^^xsd:string ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;nif:beginIndex "0"^^xsd:nonNegativeInteger ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;nif:endIndex "54"^^xsd:nonNegativeInteger ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;nif:broaderContext &lt;https://example.org/doc1#char=0,54&gt; .<br>
+            <br>
+            &lt;https://example.org/doc1#char=16,25&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;a nif:String , nif:Context , nif:Phrase , nif:RFC5147String ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;nif:referenceContext &lt;https://example.org/doc1#char=0,54&gt; ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;nif:context &lt;https://example.org/doc1#char=0,54&gt; ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;nif:anchorOf """broadcast"""^^xsd:string ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;nif:beginIndex "16"^^xsd:nonNegativeInteger ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;nif:endIndex "25"^^xsd:nonNegativeInteger ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;itsrdf:taClassRef fel:CommonForm, fel:VerbPoS, fel:NoOverlap, fel:DirectReference ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;itsrdf:taIdentRef &lt;https://en.wikipedia.org/wiki/Broadcasting&gt; .<br>
+            <br>
+            &lt;https://en.wikipedia.org/wiki/Broadcasting&gt; fel:entityType fel:Miscellany .<br>
+            <br>
+            &lt;https://example.org/doc1#char=26,53&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;a nif:String , nif:Context , nif:Phrase , nif:RFC5147String ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;nif:referenceContext &lt;https://example.org/doc1#char=0,54&gt; ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;nif:context &lt;https://example.org/doc1#char=0,54&gt; ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;nif:anchorOf """Living with Michael Jackson"""^^xsd:string ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;nif:beginIndex "26"^^xsd:nonNegativeInteger ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;nif:endIndex "53"^^xsd:nonNegativeInteger ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;itsrdf:taClassRef fel:FullProperForm, fel:SingularNounPhrasePoS, fel:MaximalOverlap, fel:DirectReference ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;itsrdf:taIdentRef &lt;https://en.wikipedia.org/wiki/Living_with_Michael_Jackson&gt; .<br>
+            <br>
+            &lt;https://en.wikipedia.org/wiki/Living_with_Michael_Jackson&gt; fel:entityType fel:Miscellany .<br>
+            <br>
+            &lt;https://example.org/doc1#char=38,53&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;a nif:String , nif:Context , nif:Phrase , nif:RFC5147String ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;nif:referenceContext &lt;https://example.org/doc1#char=0,54&gt; ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;nif:context &lt;https://example.org/doc1#char=0,54&gt; ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;nif:anchorOf """Michael Jackson"""^^xsd:string ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;nif:beginIndex "38"^^xsd:nonNegativeInteger ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;nif:endIndex "53"^^xsd:nonNegativeInteger ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;itsrdf:taClassRef fel:FullProperForm, fel:SingularNounPhrasePoS, fel:MinimalOverlap, fel:DirectReference ;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;itsrdf:taIdentRef &lt;https://en.wikipedia.org/wiki/Michael_Jackson&gt; .<br>
+            <br>
+            &lt;https://en.wikipedia.org/wiki/Michael_Jackson&gt; fel:entityType fel:Person .<br>
+        </div>
+   </div>
+   <!--------  ReferenceClasss ---------->
+   <div id="references">
+     <h2 id="ref" class="list">ReferenceClasss <span class="backlink"> back to <a href="javascript:goTop()">top</a></span></h2>
+     <p>Add your references here. It is recommended to have them as a list.</p>
+     
+     <dl><dt id="Grishman">[Grishman at al., 1996]</dt>
+        <dd>Grishman, R., and Sundheim, B. Message understanding conference-6: A brief history. In COLING 1 (1996)
+        </dd>
+      </dl><br>
+        
+     <dl><dt id="Eckhardt">[Eckhardt at al., 2014]</dt>
+        <dd>Eckhardt, A., Hre&scaron;ko, J., Proch&aacute;zka, J., Smr&iacute;, O. Entity linking based on the co- occurrence graph and entity probability. ERD, ACM (2014) 37–44</dd>
+      </dl><br>
+      
+      <dl><dt id="Uren">[Uren at al., 2006]</dt>
+        <dd>Uren, V., Cimiano, P., Iria, J., Handschuh, S., Vargas-Vera, M., Motta, E., Ciravegna, F. Semantic annotation for knowledge management: Requirements and a survey of the state of the art. Journal of Web Semantics, 4(1) (2006) 14–28</dd>
+      </dl><br>
+      
+      <dl><dt id="Perera">[Perera at al., 2016]</dt>
+        <dd>Perera, S., Mendes, P. N., Alex, A., Sheth, A. P., Thirunarayan, K. Implicit entity linking in tweets. In ISWC, (2016) 118–132</dd>
+      </dl><br>
+      
+      <dl><dt id="Borrega">[Borrega at al., 2007]</dt>
+        <dd>Borrega, O., Taul&eacute;, M., Mart&iacute;, M.A. What do we mean when we speak about Named Entities. In Proceedings of Corpus Linguistics, 2007</dd>
+      </dl><br>
+      
+      <dl><dt id="Ling">[Ling at al., 2015]</dt>
+        <dd>Ling, X., Singh, S., Weld, D. S. Design challenges for entity linking. TACL 3 (2015) 315–328</dd>
+      </dl><br>
+   </div>
+   
+   
+   <!-------  ----->
+   <div id="Citation">
+   <h2 id="cit" class="list">Citation <span class="backlink"> back to <a href="javascript:goTop()">top</a></span></h2>
+   
+   <p>If you use Mnt in a research work, we would ask you to reference the following paper that describes the vocabulary in detail:</p>
+   <p class="prettyprint">Henry Rosales-Méndez, Aidan Hogan, Barbara Poblete. "A Fine-Grained Categorisation for Entity Linking". In the Proceedings of the Conference on Empirical Methods in Natural Language Processing and International Joint Conference on Natural Language Processing (EMNLP–IJCNLP), Hong Kong, China, November 3–7, 2019.</p>
+   </div>
+ 
+
+ </div>
+</body>
+</html>
